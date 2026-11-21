@@ -1,6 +1,6 @@
 # MangoMobile
 
-[Website](https://visalrazazaidi.github.io/) | [Download for Windows](https://github.com/VisalRazaZaidi/MangoMobile/releases/latest) | [Report an issue](https://github.com/VisalRazaZaidi/MangoMobile/issues)
+[Website](https://visalrazazaidi.github.io/MangoMobile/) | [Download for Windows](https://github.com/VisalRazaZaidi/MangoMobile/releases/latest) | [Report an issue](https://github.com/VisalRazaZaidi/MangoMobile/issues)
 
 ## Install
 
