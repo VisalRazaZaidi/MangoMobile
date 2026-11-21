@@ -1,0 +1,170 @@
+[
+  {
+    "id": "android.thumbnails",
+    "category": "system",
+    "title": "Gallery thumbnail caches",
+    "description": "Preview images the gallery and file pickers regenerate on demand. Removing them frees space without touching your photos.",
+    "risk": "safe",
+    "roots": ["/sdcard/DCIM/.thumbnails", "/sdcard/.thumbnails", "/sdcard/Pictures/.thumbnails", "/sdcard/Android/data/*/cache/*thumbnails*"],
+    "matcher": { "target": "dirContents" },
+    "defaultSelected": true
+  },
+  {
+    "id": "android.temp-files",
+    "category": "system",
+    "title": "Temporary and partial downloads",
+    "description": "Interrupted downloads, scratch files and stray logs older than a week. These are re-creatable by the app that made them.",
+    "risk": "safe",
+    "roots": ["/sdcard/Download/*", "/sdcard/*"],
+    "matcher": {
+      "target": "file",
+      "include": ["*.tmp", "*.temp", "*.part", "*.partial", "*.crdownload", "*.log", ".DS_Store", "*.stackdump"],
+      "olderThanDays": 7
+    },
+    "defaultSelected": true
+  },
+  {
+    "id": "android.installers",
+    "category": "downloads",
+    "title": "Leftover app installers",
+    "description": "APK and bundle files you already installed. Keeping them costs tens of megabytes each and they go stale quickly.",
+    "risk": "recoverable",
+    "roots": ["/sdcard/Download/*", "/sdcard/Downloads/*", "/sdcard/*", "/sdcard/Telegram/Telegram Files/*"],
+    "matcher": {
+      "target": "file",
+      "include": ["*.apk", "*.apks", "*.xapk", "*.aab"],
+      "olderThanDays": 7
+    },
+    "defaultSelected": false
+  },
+  {
+    "id": "android.old-archives",
+    "category": "downloads",
+    "title": "Old archives",
+    "description": "Zip and 7z files left in Downloads for more than two months. Review the list before removing anything you still need.",
+    "risk": "recoverable",
+    "roots": ["/sdcard/Download/*", "/sdcard/Downloads/*"],
+    "matcher": {
+      "target": "file",
+      "include": ["*.zip", "*.rar", "*.7z", "*.tar", "*.gz", "*.iso"],
+      "olderThanDays": 60
+    },
+    "defaultSelected": false
+  },
+  {
+    "id": "android.logs",
+    "category": "system",
+    "title": "Application logs",
+    "description": "Text logs written into shared storage by apps and games. Nothing is lost except diagnostic history.",
+    "risk": "safe",
+    "roots": ["/sdcard/*/logs", "/sdcard/*/log", "/sdcard/Android/data/*/files/logs", "/sdcard/Android/media/*/logs"],
+    "matcher": { "target": "dirContents", "include": ["*.log", "*.txt", "*.log.*"], "olderThanDays": 14 },
+    "defaultSelected": true
+  },
+  {
+    "id": "android.app-cache",
+    "category": "apps",
+    "title": "App external caches",
+    "description": "Cache folders inside Android/data. Rebuildable, but Android 11 and later hide them from USB debugging, so this rule only appears on devices that expose them.",
+    "risk": "safe",
+    "roots": [
+      "/sdcard/Android/data/*/cache",
+      "/sdcard/Android/data/*/code_cache",
+      "/sdcard/Android/data/*/files/cache",
+      "/sdcard/Android/data/*/files/.cache"
+    ],
+    "matcher": { "target": "dirContents" },
+    "defaultSelected": true,
+    "requiresCapability": "androidDataReadable"
+  },
+  {
+    "id": "android.browser-cache",
+    "category": "apps",
+    "title": "Browser caches",
+    "description": "Cached pages and images from Chrome, Brave, Edge and Firefox. Browsing history and logins are untouched.",
+    "risk": "safe",
+    "roots": [
+      "/sdcard/Android/data/com.android.chrome/cache",
+      "/sdcard/Android/data/com.brave.browser/cache",
+      "/sdcard/Android/data/com.microsoft.emmx/cache",
+      "/sdcard/Android/data/org.mozilla.firefox/cache"
+    ],
+    "matcher": { "target": "dirContents" },
+    "defaultSelected": true,
+    "requiresCapability": "androidDataReadable"
+  },
+  {
+    "id": "android.telegram-cache",
+    "category": "social",
+    "title": "Telegram media cache",
+    "description": "Photos and videos Telegram downloaded for fast scrolling. The cloud copy remains and redownloads on demand.",
+    "risk": "recoverable",
+    "roots": ["/sdcard/Android/data/org.telegram.messenger/cache", "/sdcard/Android/data/org.telegram.messenger/files/cache"],
+    "matcher": { "target": "dirContents", "olderThanDays": 30 },
+    "defaultSelected": false,
+    "requiresCapability": "androidDataReadable"
+  },
+  {
+    "id": "android.whatsapp-status",
+    "category": "social",
+    "title": "Viewed WhatsApp statuses",
+    "description": "Status photos and videos WhatsApp caches after you view them. They are not part of your chats.",
+    "risk": "recoverable",
+    "roots": [
+      "/sdcard/Android/media/com.whatsapp/WhatsApp/Media/.Statuses",
+      "/sdcard/WhatsApp/Media/.Statuses"
+    ],
+    "matcher": { "target": "dirContents" },
+    "defaultSelected": false
+  },
+  {
+    "id": "android.whatsapp-voice",
+    "category": "social",
+    "title": "Old WhatsApp voice notes",
+    "description": "Voice messages older than six months, which you have almost certainly already listened to.",
+    "risk": "recoverable",
+    "roots": ["/sdcard/Android/media/com.whatsapp/WhatsApp/Media/WhatsApp Voice Notes", "/sdcard/WhatsApp/Media/WhatsApp Voice Notes"],
+    "matcher": { "target": "dirContents", "olderThanDays": 180 },
+    "defaultSelected": false
+  },
+  {
+    "id": "android.recycle-bins",
+    "category": "system",
+    "title": "Old recycle bin contents",
+    "description": "Files in the phone's own trash folders. Clearing these makes space permanent, so review first.",
+    "risk": "recoverable",
+    "roots": ["/sdcard/.Trash", "/sdcard/Trash", "/sdcard/Recycle", "/sdcard/.recycle", "/sdcard/RecycleBin"],
+    "matcher": { "target": "dirContents", "olderThanDays": 30 },
+    "defaultSelected": false
+  },
+  {
+    "id": "android.screenshots-old",
+    "category": "media",
+    "title": "Old screenshots",
+    "description": "Screenshots older than three months. They are usually forgotten within days — review the list before selecting.",
+    "risk": "recoverable",
+    "roots": ["/sdcard/DCIM/Screenshots/*", "/sdcard/Pictures/Screenshots/*"],
+    "matcher": { "target": "file", "include": ["*.png", "*.jpg", "*.jpeg", "*.webp"], "olderThanDays": 90 },
+    "defaultSelected": false
+  },
+  {
+    "id": "android.screen-recordings",
+    "category": "media",
+    "title": "Old screen recordings",
+    "description": "Screen recordings from more than two months ago. These are frequently hundreds of megabytes each.",
+    "risk": "recoverable",
+    "roots": ["/sdcard/DCIM/Screen recordings/*", "/sdcard/Movies/Screen recordings/*", "/sdcard/Movies/ScreenRecords/*"],
+    "matcher": { "target": "file", "include": ["*.mp4", "*.mkv", "*.webm"], "olderThanDays": 60 },
+    "defaultSelected": false
+  },
+  {
+    "id": "android.empty-folders",
+    "category": "system",
+    "title": "Empty folders",
+    "description": "Folders that contain nothing at any depth, left behind by uninstalled apps and moved files.",
+    "risk": "safe",
+    "roots": ["/sdcard/*", "/sdcard/Download/*", "/sdcard/Pictures/*", "/sdcard/Music/*", "/sdcard/DCIM/*"],
+    "matcher": { "target": "dir", "exclude": ["/sdcard/Android", "/sdcard/Android/*", "/sdcard/DCIM/Camera", "/sdcard/Pictures", "/sdcard/Documents", "/sdcard/Music", "/sdcard/Movies"] },
+    "defaultSelected": true
+  }
+]

@@ -1,0 +1,13 @@
+node_modules/
+out/
+release/
+*.log
+*.local
+shot-*.png
+Thumbs.db
+.DS_Store
+.hallmark/
+.qa/
+.env
+.env.*
+build/preview-demo.*

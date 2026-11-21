@@ -1,0 +1,85 @@
+{
+  "name": "mangomobile",
+  "version": "0.1.2",
+  "description": "Fast desktop storage cleaner for Android phones: scans and cleans over ADB instead of slow MTP",
+  "main": "./out/main/index.js",
+  "author": "MangoMobile",
+  "license": "GPL-3.0-only",
+  "private": true,
+  "homepage": "https://visalrazazaidi.github.io/",
+  "repository": { "type": "git", "url": "git+ssh://git@github.com/VisalRazaZaidi/MangoMobile.git" },
+  "bugs": { "url": "https://github.com/VisalRazaZaidi/MangoMobile/issues" },
+  "scripts": {
+    "dev": "electron-vite dev",
+    "start": "electron-vite preview",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.web.json && tsc --noEmit -p tsconfig.node.json",
+    "build": "electron-vite build",
+    "build:win": "electron-vite build && electron-builder --win --x64 && node scripts/prune-releases.mjs",
+    "make:icon": "node scripts/make-icon.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "check:device": "tsx scripts/device-check.ts",
+    "shot:device": "node scripts/device-shot.mjs",
+    "test": "tsx --test tests/*.test.ts"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.11",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "electron": "^38.2.0",
+    "electron-builder": "^26.0.12",
+    "electron-vite": "^4.0.0",
+    "tailwindcss": "^4.1.11",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.5",
+    "vue": "^3.5.21",
+    "vue-tsc": "^3.0.6"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.2": true,
+    "electron@38.8.6": true
+  },
+  "build": {
+    "appId": "io.mangomobile.app",
+    "productName": "MangoMobile",
+    "copyright": "GPL-3.0-only",
+    "asar": true,
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "out/**/*",
+      "package.json",
+      "!**/*.map"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "artifactName": "${productName}-${version}-${arch}-setup.${ext}",
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": false,
+      "shortcutName": "MangoMobile"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-${arch}-portable.${ext}"
+    }
+  }
+}
